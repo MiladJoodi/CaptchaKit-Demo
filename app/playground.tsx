@@ -8,6 +8,7 @@ import {
   type Locale,
   type Theme,
 } from "captchakit";
+import { DocsSection, NAV_ITEMS, type SectionId } from "./docs-content";
 import "./captchakit.css";
 
 const TYPES: CaptchaType[] = ["text", "number", "math", "image"];
@@ -238,8 +239,7 @@ function CheckIcon() {
   );
 }
 
-export default function Playground() {
-  const [uiMode, setUiMode] = useState<UiMode>("light");
+function TryLivePanel({ uiMode }: { uiMode: UiMode }) {
   const [type, setType] = useState<CaptchaType>("math");
   const [locale, setLocale] = useState<Locale>("en");
   const [difficulty, setDifficulty] = useState<Difficulty>("medium");
@@ -283,6 +283,90 @@ export default function Playground() {
   }
 
   return (
+    <div className="try-panel anim-in">
+      <div className="try-intro">
+        <h2 className="doc-h2">Try live</h2>
+        <p className="doc-p">
+          Change options and solve a live CAPTCHA. The snippet updates as you
+          go.
+        </p>
+      </div>
+
+      <div className="panel">
+        <div className="controls">
+          <ChipGroup label="Type" value={type} options={TYPES} onChange={setType} />
+          <ChipGroup
+            label="Locale"
+            value={locale}
+            options={localeOptions}
+            onChange={setLocale}
+          />
+          <ChipGroup
+            label="Level"
+            value={difficulty}
+            options={DIFFICULTIES}
+            onChange={setDifficulty}
+          />
+        </div>
+
+        <div className="stage">
+          <div className="stage-head">
+            <span>Challenge</span>
+            <span className={`status ${status.kind}`}>
+              {status.kind === "verified"
+                ? "Verified"
+                : status.kind === "error"
+                  ? "Error"
+                  : "Ready"}
+            </span>
+          </div>
+          <div className={`stage-board is-${applied.theme}`}>
+            <div className="stage-pop" key={key}>
+              <Captcha
+                type={applied.type}
+                locale={applied.locale}
+                difficulty={applied.difficulty}
+                theme={applied.theme}
+                onVerify={(token) => setStatus({ kind: "verified", token })}
+                onError={(error) =>
+                  setStatus({ kind: "error", code: String(error) })
+                }
+              />
+            </div>
+          </div>
+          {status.kind === "verified" && (
+            <p className="toast ok">Verified · {status.token.slice(0, 22)}…</p>
+          )}
+          {status.kind === "error" && (
+            <p className="toast bad">{status.code}</p>
+          )}
+        </div>
+
+        <div className="code">
+          <div className="code-shine" aria-hidden />
+          <button
+            type="button"
+            className={`copy-btn ${copied ? "is-copied" : ""}`}
+            aria-label={copied ? "Copied" : "Copy code"}
+            title={copied ? "Copied" : "Copy"}
+            onClick={() => void copy()}
+          >
+            {copied ? <CheckIcon /> : <CopyIcon />}
+          </button>
+          <pre>
+            <code>{highlighted}</code>
+          </pre>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Playground() {
+  const [uiMode, setUiMode] = useState<UiMode>("light");
+  const [section, setSection] = useState<SectionId>("try");
+
+  return (
     <div className={`app ${uiMode}`} data-mode={uiMode}>
       <div className="app-bg" aria-hidden>
         <div className="bg-blob bg-blob-a" />
@@ -291,10 +375,20 @@ export default function Playground() {
         <div className="bg-grid" />
       </div>
 
-      <div className="app-frame">
-        <header className="hero anim-in delay-1">
+      <div className="docs-shell">
+        <header className="docs-header anim-in delay-1">
           <h1 className="brand">CaptchaKit</h1>
+
           <div className="hero-actions">
+            <button
+              type="button"
+              className={`try-link ${section === "try" ? "is-active" : ""}`}
+              onClick={() => setSection("try")}
+            >
+              <span className="try-dot" />
+              Try live
+            </button>
+
             <button
               type="button"
               className="mode-btn"
@@ -314,6 +408,7 @@ export default function Playground() {
                 <MoonIcon />
               </span>
             </button>
+
             <a
               className="npm-btn"
               href="https://www.npmjs.com/package/captchakit"
@@ -341,72 +436,33 @@ export default function Playground() {
           </div>
         </header>
 
-        <section className="panel">
-          <div className="controls anim-in delay-2">
-            <ChipGroup label="Type" value={type} options={TYPES} onChange={setType} />
-            <ChipGroup
-              label="Locale"
-              value={locale}
-              options={localeOptions}
-              onChange={setLocale}
-            />
-            <ChipGroup
-              label="Level"
-              value={difficulty}
-              options={DIFFICULTIES}
-              onChange={setDifficulty}
-            />
-          </div>
+        <div className="docs-layout anim-in delay-2">
+          <aside className="docs-nav" aria-label="Documentation">
+            <p className="docs-nav-title">Docs</p>
+            <nav className="docs-nav-list">
+              {NAV_ITEMS.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`docs-nav-item ${section === item.id ? "is-active" : ""} ${item.live ? "is-live" : ""}`}
+                  onClick={() => setSection(item.id)}
+                >
+                  {item.live ? <span className="try-dot" /> : null}
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+          </aside>
 
-          <div className="stage anim-in delay-3">
-            <div className="stage-head">
-              <span>Challenge</span>
-              <span className={`status ${status.kind}`}>
-                {status.kind === "verified"
-                  ? "Verified"
-                  : status.kind === "error"
-                    ? "Error"
-                    : "Ready"}
-              </span>
-            </div>
-            <div className={`stage-board is-${applied.theme}`}>
-              <div className="stage-pop" key={key}>
-                <Captcha
-                  type={applied.type}
-                  locale={applied.locale}
-                  difficulty={applied.difficulty}
-                  theme={applied.theme}
-                  onVerify={(token) => setStatus({ kind: "verified", token })}
-                  onError={(error) =>
-                    setStatus({ kind: "error", code: String(error) })
-                  }
-                />
-              </div>
-            </div>
-            {status.kind === "verified" && (
-              <p className="toast ok">Verified · {status.token.slice(0, 22)}…</p>
+          <main className="docs-main" key={section}>
+            {section === "try" ? (
+              <TryLivePanel uiMode={uiMode} />
+            ) : (
+              <DocsSection id={section} />
             )}
-            {status.kind === "error" && (
-              <p className="toast bad">{status.code}</p>
-            )}
-          </div>
-
-          <div className="code anim-in delay-4">
-            <div className="code-shine" aria-hidden />
-            <button
-              type="button"
-              className={`copy-btn ${copied ? "is-copied" : ""}`}
-              aria-label={copied ? "Copied" : "Copy code"}
-              title={copied ? "Copied" : "Copy"}
-              onClick={() => void copy()}
-            >
-              {copied ? <CheckIcon /> : <CopyIcon />}
-            </button>
-            <pre>
-              <code>{highlighted}</code>
-            </pre>
-          </div>
-        </section>      </div>
+          </main>
+        </div>
+      </div>
     </div>
   );
 }
