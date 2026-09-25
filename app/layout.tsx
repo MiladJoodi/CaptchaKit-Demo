@@ -32,7 +32,14 @@ const fa = Vazirmatn({
 export const metadata: Metadata = {
   title: "CaptchaKit Playground",
   description:
-    "Interactive demo for captchakit — try every CAPTCHA type, locale, difficulty, and theme, then copy the React snippet.",
+    "Interactive demo for CaptchaKit by Milad Joodi — try every CAPTCHA type, locale, difficulty, and theme.",
+  authors: [{ name: "Milad Joodi", url: "https://www.linkedin.com/in/joodi/" }],
+  openGraph: {
+    title: "CaptchaKit Playground",
+    description:
+      "Self-hosted CAPTCHA for React and Next.js. Try it live, then install from npm.",
+    url: "https://captchakit.netlify.app/",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

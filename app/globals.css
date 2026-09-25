@@ -172,6 +172,68 @@ button {
   margin-bottom: 1.5rem;
 }
 
+.doc-p a,
+.doc-link,
+.docs-footer a {
+  color: #1d4ed8;
+  text-decoration: none;
+  font-weight: inherit;
+}
+
+.doc-p a:hover,
+.doc-link:hover,
+.docs-footer a:hover {
+  color: #1e40af;
+  text-decoration: underline;
+}
+
+.app.dark .doc-p a,
+.app.dark .doc-link,
+.app.dark .docs-footer a {
+  color: #3b82f6;
+}
+
+.app.dark .doc-p a:hover,
+.app.dark .doc-link:hover,
+.app.dark .docs-footer a:hover {
+  color: #60a5fa;
+}
+
+.icon-link {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  color: var(--ink);
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.25s ease;
+}
+
+.icon-link:hover {
+  color: var(--accent);
+  background: rgba(37, 99, 235, 0.08);
+  transform: translateY(-1px);
+}
+
+.docs-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  padding: 0 0.15rem;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.footer-sep {
+  opacity: 0.5;
+}
+
 .try-link {
   display: inline-flex;
   align-items: center;
@@ -542,33 +604,30 @@ button {
 .npm-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.55rem 0.9rem;
+  justify-content: center;
+  padding: 0.4rem 0.7rem;
   border-radius: 0.7rem;
-  background: var(--ink);
-  color: var(--chip-on-text);
-  font-family: var(--font-sans), sans-serif;
-  font-size: 0.8125rem;
-  font-weight: 600;
+  background: #cb3837;
   text-decoration: none;
   transition:
     transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.3s ease,
-    opacity 0.2s ease;
+    background 0.2s ease;
 }
 
 .npm-btn:hover {
+  background: #b32f2e;
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px -12px rgba(15, 23, 42, 0.45);
+  box-shadow: 0 10px 24px -12px rgba(203, 56, 55, 0.55);
 }
 
-.npm-btn:hover .npm-arrow {
-  transform: translate(2px, -2px);
+.npm-logo {
+  display: block;
+  height: 1.1rem;
+  width: auto;
+  object-fit: contain;
 }
 
-.npm-arrow {
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
 
 /* ========== Panel ========== */
 .panel {

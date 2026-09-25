@@ -27,12 +27,12 @@ export const NAV_ITEMS: {
 }[] = [
   { id: "intro", label: "Introduction" },
   { id: "install", label: "Installation" },
-  { id: "quickstart", label: "Quick start" },
-  { id: "types", label: "Types & difficulty" },
+  { id: "quickstart", label: "Quick Start" },
+  { id: "types", label: "Types & Difficulty" },
   { id: "locale", label: "Localization" },
   { id: "styling", label: "Styling" },
   { id: "server", label: "Server API" },
-  { id: "try", label: "Try live", live: true },
+  { id: "try", label: "Try Live", live: true },
 ];
 
 export function DocsSection({ id }: { id: Exclude<SectionId, "try"> }) {
@@ -50,6 +50,36 @@ const CONTENT: Record<Exclude<SectionId, "try">, ReactNode> = {
       <DocP>
         Answers are generated and verified on the server. The browser never
         receives a plaintext answer outside the visible challenge itself.
+      </DocP>
+      <DocP>
+        Built by{" "}
+        <a
+          className="doc-link"
+          href="https://www.linkedin.com/in/joodi/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Milad Joodi
+        </a>
+        . Source on{" "}
+        <a
+          className="doc-link"
+          href="https://github.com/MiladJoodi/CaptchaKit"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+        . Live demo at{" "}
+        <a
+          className="doc-link"
+          href="https://captchakit.netlify.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          captchakit.netlify.app
+        </a>
+        .
       </DocP>
       <DocH3>Features</DocH3>
       <DocList
