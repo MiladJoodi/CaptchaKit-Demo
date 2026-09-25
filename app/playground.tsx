@@ -309,39 +309,30 @@ function TryLivePanel({ uiMode }: { uiMode: UiMode }) {
           />
         </div>
 
-        <div className="stage">
-          <div className="stage-head">
-            <span>Challenge</span>
-            <span className={`status ${status.kind}`}>
-              {status.kind === "verified"
-                ? "Verified"
-                : status.kind === "error"
-                  ? "Error"
-                  : "Ready"}
-            </span>
-          </div>
-          <div className={`stage-board is-${applied.theme}`}>
-            <div className="stage-pop" key={key}>
-              <Captcha
-                type={applied.type}
-                locale={applied.locale}
-                difficulty={applied.difficulty}
-                theme={applied.theme}
-                onVerify={(token) => setStatus({ kind: "verified", token })}
-                onError={(error) =>
-                  setStatus({ kind: "error", code: String(error) })
-                }
-              />
+          <div className="stage">
+            <div className="stage-head">
+              <span>Challenge</span>
+              <span className={`status ${status.kind}`}>
+                {status.kind === "verified"
+                  ? "Verified"
+                  : status.kind === "error"
+                    ? "Wrong answer"
+                    : "Ready"}
+              </span>
+            </div>
+            <div className={`stage-board is-${applied.theme}`}>
+              <div className="stage-pop" key={key}>
+                <Captcha
+                  type={applied.type}
+                  locale={applied.locale}
+                  difficulty={applied.difficulty}
+                  theme={applied.theme}
+                  onVerify={(token) => setStatus({ kind: "verified", token })}
+                  onError={() => setStatus({ kind: "error", code: "invalid" })}
+                />
+              </div>
             </div>
           </div>
-          {status.kind === "verified" && (
-            <p className="toast ok">Verified · {status.token.slice(0, 22)}…</p>
-          )}
-          {status.kind === "error" && (
-            <p className="toast bad">{status.code}</p>
-          )}
-        </div>
-
         <div className="code">
           <div className="code-shine" aria-hidden />
           <button
@@ -467,35 +458,6 @@ export default function Playground() {
             )}
           </main>
         </div>
-
-        <footer className="docs-footer anim-in delay-3">
-          <span>
-            Made by{" "}
-            <a
-              href="https://www.linkedin.com/in/joodi/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Milad Joodi
-            </a>
-          </span>
-          <span className="footer-sep">·</span>
-          <a
-            href="https://github.com/MiladJoodi/CaptchaKit"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-          <span className="footer-sep">·</span>
-          <a
-            href="https://captchakit.netlify.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Demo
-          </a>
-        </footer>
       </div>
     </div>
   );
