@@ -1,5 +1,5 @@
 {
-  "name": "packtestdelete",
+  "name": "captchakit-playground",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "captchakit": "file:../CaptchaKit",
     "next": "16.3.6",
     "react": "19.2.8",
     "react-dom": "19.2.8"
