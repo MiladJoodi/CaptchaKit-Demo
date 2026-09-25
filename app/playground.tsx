@@ -153,7 +153,7 @@ function ChipGroup<T extends string>({
   return (
     <div className="ck-row">
       <span className="ck-label">{label}</span>
-      <div className="ck-chips" ref={wrapRef}>
+      <div className="ck-chips" ref={wrapRef} data-count={options.length}>
         <span
           className="ck-indicator"
           style={{
