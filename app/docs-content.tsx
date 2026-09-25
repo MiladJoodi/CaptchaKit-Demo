@@ -266,6 +266,10 @@ export async function POST(request: Request) {
       <DocP>The default theme is `light`.</DocP>
 
       <DocH3>Custom classes</DocH3>
+      <DocP>
+        Style individual parts with `classNames`. This works with plain CSS, CSS
+        Modules, Tailwind CSS, or any class-based system.
+      </DocP>
       <CodeBlock
         filename="example.tsx"
         code={`<Captcha
@@ -276,6 +280,27 @@ export async function POST(request: Request) {
     button: "my-button",
     error: "my-error",
   }}
+/>`}
+      />
+
+      <DocH3>Tailwind CSS</DocH3>
+      <DocP>
+        Pass Tailwind utilities through `classNames`. Keep importing
+        `captchakit/styles.css` for base structure, or override heavily with
+        your own utilities.
+      </DocP>
+      <CodeBlock
+        filename="example.tsx"
+        code={`<Captcha
+  theme="light"
+  classNames={{
+    container: "w-full max-w-sm rounded-xl border border-zinc-200 bg-white p-3 shadow-sm",
+    challenge: "rounded-lg bg-zinc-50 font-mono text-lg tracking-wide",
+    input: "mt-2 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20",
+    button: "mt-2 w-full rounded-lg bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800",
+    error: "mt-2 text-sm text-red-600",
+  }}
+  onVerify={(token) => {}}
 />`}
       />
 
