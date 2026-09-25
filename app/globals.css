@@ -1294,7 +1294,7 @@ button {
 
 @media (max-width: 480px) {
   .docs-shell {
-    padding: 0.65rem 0.55rem 1.35rem;
+    padding: 0.65rem 0.55rem 8rem;
   }
 
   .brand {
