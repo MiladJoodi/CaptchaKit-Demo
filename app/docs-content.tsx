@@ -189,7 +189,7 @@ export default function Form() {
 
       <Captcha
         type="math"
-        locale="fa"
+        locale="en"
         difficulty="easy"
         onVerify={setCaptchaToken}
         onError={() => setCaptchaToken(null)}
